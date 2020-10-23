@@ -1,3 +1,5 @@
+
+package com.alome.tellerium
 import android.app.Application
 import com.chibatching.kotpref.Kotpref
 

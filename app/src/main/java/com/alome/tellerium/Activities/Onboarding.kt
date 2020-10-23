@@ -2,6 +2,7 @@ package com.alome.tellerium.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import androidx.fragment.app.Fragment
@@ -21,19 +22,30 @@ class Onboarding : AppIntro() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val companyName = Html.fromHtml("<b> Tellerium</b>");
+        val companyName = Html.fromHtml("<b>Tellerium</b>");
         addSlide(AppIntroFragment.newInstance(
                 "Welcome!",
-                "This is an Android Developer Based Assessment by $companyName to create a  simple farmer Management Dashboard",
-                imageDrawable = R.drawable.ic_welcome
+
+                "This is an Android Developer Based Assessment from $companyName to create a  simple farmer Management Dashboard",
+                imageDrawable = R.drawable.ic_welcome,
+                backgroundDrawable = R.drawable.bg_app_intro,
+                titleColor =Color.BLACK,
+                descriptionColor = Color.BLACK
         ))
 
         addSlide(AppIntroFragment.newInstance(
                 "Get Started!",
-                "Ready when you are!, hoping you'd have a wonderful experience  ",
-                imageDrawable = R.drawable.ic_farm_girl
+                "Hoping you'd have a wonderful experience  ",
+                imageDrawable = R.drawable.ic_farm_girl,
+                backgroundDrawable = R.drawable.bg_app_intro,
+                titleColor =Color.BLACK,
+                descriptionColor = Color.BLACK
         ))
         setTransformer(AppIntroPageTransformerType.Parallax())
+//        set
+        setColorSkipButton(Color.BLACK)
+        setColorDoneText(Color.BLACK)
+        setProgressIndicator()
     }
 
     public override fun onSkipPressed(currentFragment: Fragment?) {
