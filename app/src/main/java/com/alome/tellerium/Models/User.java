@@ -1,4 +1,4 @@
-package com.alome.tellerium.Utils;
+package com.alome.tellerium.Models;
 
 
 import android.os.Parcel;

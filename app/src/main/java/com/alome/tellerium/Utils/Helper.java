@@ -1,31 +1,16 @@
 package com.alome.tellerium.Utils;
 
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.MimeTypeMap;
 
-import androidx.annotation.Nullable;
-
+import com.alome.tellerium.Models.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 
 
 /**
@@ -34,8 +19,6 @@ import java.util.Locale;
 
 public class Helper {
     private static final String USER = "USER";
-    private static final String USER_MUTE = "USER_MUTE";
-    private static final String SEND_OTP = "SEND_OTP";
     private SharedPreferenceHelper sharedPreferenceHelper;
     private Gson gson;
     private HashSet<String> muteUsersSet;
@@ -60,7 +43,6 @@ public class Helper {
     }
 
     public void logout() {
-        sharedPreferenceHelper.clearPreference(SEND_OTP);
         sharedPreferenceHelper.clearPreference(USER);
     }
 

@@ -1,18 +1,16 @@
 package com.alome.tellerium.Activities
 
 import android.content.Intent
-import android.os.Build
-import android.os.Build.*
+import android.os.Build.VERSION
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import com.alome.tellerium.R
 import com.alome.tellerium.Utils.AppPref
 import com.alome.tellerium.Utils.Helper
 
-public class SplashScreen : AppCompatActivity() {
+ class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

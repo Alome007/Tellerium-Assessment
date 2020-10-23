@@ -5,8 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.alome.tellerium.R
+import com.alome.tellerium.Utils.AppPref
 import com.github.appintro.AppIntro
 import com.github.appintro.AppIntroFragment
 import com.github.appintro.AppIntroPageTransformerType
@@ -46,15 +48,22 @@ class Onboarding : AppIntro() {
         setColorSkipButton(Color.BLACK)
         setColorDoneText(Color.BLACK)
         setProgressIndicator()
+        setNextArrowColor(Color.BLACK)
     }
 
     public override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
+        AppPref.isAppIntroShown = true
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
         finish()
     }
 
     public override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
+        AppPref.isAppIntroShown = true
+        val intent = Intent(this, Login::class.java)
+        startActivity(intent)
         finish()
     }
 }
