@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.alome.tellerium"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -44,6 +44,8 @@ dependencies {
     //Kotlin
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.chibatching.kotpref:kotpref:2.10.0'
+
 
 }
 repositories {
