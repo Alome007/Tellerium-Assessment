@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alome.tellerium.Models.User;
+import com.gmail.samehadar.iosdialog.IOSDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,9 +24,9 @@ public class Helper {
     private Gson gson;
     private HashSet<String> muteUsersSet;
     private HashMap<String, User> myUsersNameInPhoneMap;
-
     public Helper(Context context) {
         sharedPreferenceHelper = new SharedPreferenceHelper(context);
+
         gson = new Gson();
     }
 
