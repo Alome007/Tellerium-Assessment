@@ -10,16 +10,13 @@ import com.alome.tellerium.R
 import com.alome.tellerium.Utils.Helper
 import com.gmail.samehadar.iosdialog.IOSDialog
 import kotlinx.android.synthetic.main.login.*
-
 class Login:  AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
-        val email=email.text
         tool_bar.setNavigationOnClickListener{
             onBackPressed()
         }
-        val password=password.text
         val helper= Helper(this)
         login.setOnClickListener{
             if (verify()){
@@ -29,7 +26,7 @@ class Login:  AppCompatActivity() {
                         .show()
                 val handler = Handler()
                 handler.postDelayed({
-                    if (email.equals("test@tellerium.io")&&password.equals("password")){
+                    if (email.text.toString() == "test@tellerium.io" && password.text.toString() == "password"){
                         val  User=User("test","test");
                         helper.loggedInUser=User
                         startActivity(Intent(this@Login, MainActivity::class.java))
@@ -52,7 +49,7 @@ class Login:  AppCompatActivity() {
             email.setError("Required")
         }else if (password.text.isEmpty()){
             isVerified=false
-            email.setError("Required")
+            password.setError("Required")
         }else{
             isVerified=true
         }

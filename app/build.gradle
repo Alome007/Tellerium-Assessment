@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.alome.tellerium"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -41,11 +41,21 @@ dependencies {
     //    Material Design App Intro
     implementation 'com.github.AppIntro:AppIntro:6.0.0'
 
+    // Google material Design
+    implementation 'com.google.android.material:material:1.1.0'
+
+    // Circular Imageview
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+
+
+    // chip navigation
+    implementation 'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.3.4'
+
     //Kotlin
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.chibatching.kotpref:kotpref:2.10.0'
-
 
 }
 repositories {
