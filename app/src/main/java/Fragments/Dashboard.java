@@ -3,13 +3,16 @@ package Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +25,22 @@ import com.alome.tellerium.Adapters.mainAdapter;
 import com.alome.tellerium.Models.mainModel;
 import com.alome.tellerium.R;
 import com.alome.tellerium.Utils.Helper;
+import com.alome.tellerium.Utils.constants;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.gmail.samehadar.iosdialog.IOSDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickListener {
     mainAdapter adapter;
@@ -34,11 +50,13 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
     TextView amt;
     ImageView menu;
     View view;
+    PopupMenu.OnMenuItemClickListener listener;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.home_fragment, container, false);
         initUI();
+        loadData();
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +75,7 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
     }
 
     private void initUI() {
+
         menu=view.findViewById(R.id.menu);
         helper=new Helper(getContext());
         amt=view.findViewById(R.id.amt);
@@ -87,6 +106,39 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
 
                 break;
         }
-        return false;
+        return true;
+    }
+
+
+    public void loadData(){
+        final IOSDialog iosDialog= new IOSDialog.Builder(getContext())
+                .setMessageContent("Please wait..")
+                .setCancelable(false)
+                .show();
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        final StringRequest getRequest = new StringRequest(Request.Method.GET, constants.BASE_URL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        iosDialog.dismiss();
+                        // response
+                        if (response!=null){
+                            Toast.makeText(getContext(), "Please check your Internet Connection!", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Log.d("Response", response);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.d("ERROR","error =>" +error.toString());
+                    }
+                }
+        );
+        queue.add(getRequest);
     }
 }
