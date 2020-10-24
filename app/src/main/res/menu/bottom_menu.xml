@@ -6,7 +6,7 @@
         android:title="Home"
         app:cnb_iconColor="@color/home"/>
     <item
-        android:id="@+id/test"
+        android:id="@+id/add"
         android:icon="@drawable/ic_add_group"
         android:title="Register Farmer"
         app:cnb_iconColor="@color/settings" />
