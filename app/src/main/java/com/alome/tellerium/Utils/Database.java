@@ -18,13 +18,13 @@ public class Database extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String tableEmp="create table farmers(id text,name text,location text, image_url text)";
+        String tableEmp="create table farmers(id text,name text,location text, image_url text, local integer)";
         db.execSQL(tableEmp);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
-    public void insertData(String id,String name, String location,  String image_url)
+    public void insertData(String id,String name, String location,  String image_url, int isLocal )
     {
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         ContentValues values=new ContentValues();
@@ -32,6 +32,7 @@ public class Database extends SQLiteOpenHelper {
         values.put("name",name);
         values.put("location",location);
         values.put("image_url", image_url);
+        values.put("local", isLocal);
         sqLiteDatabase.insert("farmers",null,values);
     }
     public ArrayList<farmerModel> fetchData()
@@ -44,7 +45,13 @@ public class Database extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             do
             {
-               model= new farmerModel(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3));
+                if (Integer.parseInt(cursor.getString(4))==0){
+                    model= new farmerModel(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3),false);
+
+                }else{
+                    model= new farmerModel(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3),true);
+
+                }
                 datas.add(model);
 
             } while (cursor.moveToNext());

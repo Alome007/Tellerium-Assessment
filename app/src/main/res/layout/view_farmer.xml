@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Toolbar
+        android:layout_width="match_parent"
+        android:id="@+id/tool_bar"
+        android:navigationIcon="@drawable/ic_close_black_2_24dp"
+        android:title="Farmer Details"
+        android:layout_height="wrap_content"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/_60sdp"
+        android:id="@+id/avatar"
+        android:src="@drawable/ic_profile_user"
+        android:layout_below="@+id/tool_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_height="@dimen/_60sdp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/avatar"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Full Name"
+            android:textColor="#000"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/name"
+            android:paddingLeft="@dimen/_25sdp"
+            android:hint="John Doe"
+            android:enabled="false"
+            android:inputType="textEmailAddress"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:background="@drawable/edit_text"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="@dimen/_50sdp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Location"
+            android:textColor="#000"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/location"
+            android:paddingLeft="@dimen/_25sdp"
+            android:hint="10, Test Street"
+            android:enabled="false"
+            android:inputType="textEmailAddress"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:background="@drawable/edit_text"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="@dimen/_50sdp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Click to view Map"
+            android:textColor="#000"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="match_parent"
+            android:background="@drawable/buttons"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:id="@+id/reg"
+            android:text="Open Map"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:layout_marginRight="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_below="@+id/password"
+            android:layout_height="@dimen/_45sdp"/>
+    </LinearLayout>
+</RelativeLayout>

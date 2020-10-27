@@ -41,7 +41,7 @@ import com.koushikdutta.ion.Ion;
 import java.util.ArrayList;
 
 
-public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class Dashboard extends Fragment {
     mainAdapter adapter;
     Helper helper;
     ArrayList<mainModel> arrayList=new ArrayList<>();
@@ -49,7 +49,7 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
     ImageView menu;
     View view;
     Database database;
-    PopupMenu.OnMenuItemClickListener listener;
+
     SharedPreferences preferences;
     View v2;
     private int count;
@@ -67,6 +67,35 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
                 PopupMenu popup = new PopupMenu(getContext(), menu);
                 popup.inflate(R.menu.popup_menu);
                 popup.show();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        int id=menuItem.getItemId();
+                        switch (id){
+                            case R.id.log_out:
+                                SharedPreferences sharedPreferences=getContext().getSharedPreferences(constants.SHARED_PREF,Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor=sharedPreferences.edit();
+                                editor.clear().apply();
+                                final IOSDialog dialog= new IOSDialog.Builder(getActivity())
+                                        .setMessageContent("Please wait...")
+                                        .setCancelable(false)
+                                        .show();
+                                Handler handler=new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                        helper.logout();
+                                        startActivity(new Intent(getContext(), Login.class));
+                                        getActivity().finish();
+                                    }
+                                }, 2000);
+
+                                break;
+                        }
+                        return true;
+                    }
+                });
             }
         });
         mainModel model=new mainModel(10,"Farmers", R.drawable.ic_farmer);
@@ -113,42 +142,11 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
         database = new Database(getContext());
         database.getWritableDatabase();
         preferences=getContext().getSharedPreferences(constants.SHARED_PREF, Context.MODE_PRIVATE);
-        final Handler handler=new Handler();
-         handler.postDelayed(new Runnable() {
-             @Override
-             public void run() {
-                 SharedPreferences sharedPreferences=getContext().getSharedPreferences(constants.SHARED_PREF, Context.MODE_PRIVATE);
-                 count=sharedPreferences.getInt(constants.LOCAL_COUNT,0);
-                 handler.postDelayed(this,1000);
-             }
-         },1000);
+
 
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        int id=menuItem.getItemId();
-        switch (id){
-            case R.id.log_out:
-                final IOSDialog dialog= new IOSDialog.Builder(getActivity())
-                        .setMessageContent("Please wait...")
-                        .setCancelable(false)
-                        .show();
-                Handler handler=new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-                        helper.logout();
-                        startActivity(new Intent(getContext(), Login.class));
-                        getActivity().finish();
-                    }
-                }, 2000);
 
-                break;
-        }
-        return true;
-    }
 
 
     public void loadData(){
@@ -176,7 +174,7 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
                             for (int a =0; a<c.size(); a++){
                                 JsonObject obj=c.get(a).getAsJsonObject();
                                 Log.d("DataResult", obj.get("reg_no").getAsString());
-                                database.insertData(obj.get("farmer_id").getAsString(), obj.get("first_name")+" "+obj.get("surname"), obj.get("address").getAsString(), obj.get("passport_photo").getAsString());
+                                database.insertData(obj.get("farmer_id").getAsString(), obj.get("first_name")+" "+obj.get("surname"), obj.get("address").getAsString(), obj.get("passport_photo").getAsString(), 0);
                                if (database.fetchData().size()>0){
                                    SharedPreferences.Editor editor=preferences.edit();
                                    editor.putBoolean(constants.DATA_LOADED,true);

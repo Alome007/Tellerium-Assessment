@@ -6,6 +6,7 @@ public class constants {
     public static String BASE_URL="https://theagromall.com/api/v2/get-sample-farmers?limit="+MAX_ITEM;
     public static String SHARED_PREF="shared_pref";
     public static String DATA_LOADED="data_loaded";
+    public static String DATA="data";
     public static String LOCAL_COUNT="l_count";
     public static String TAG="myApp";
 }

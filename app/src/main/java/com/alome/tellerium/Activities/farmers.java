@@ -1,5 +1,6 @@
 package com.alome.tellerium.Activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,14 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alome.tellerium.Adapters.farmersAdapter;
+import com.alome.tellerium.Fragments.viewFarmer;
 import com.alome.tellerium.Models.farmerModel;
 import com.alome.tellerium.R;
 import com.alome.tellerium.Utils.Database;
+import com.alome.tellerium.Utils.constants;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class farmers extends AppCompatActivity {
+public class farmers extends AppCompatActivity implements farmersAdapter.itemClick {
     Toolbar toolbar;
     RecyclerView recyclerView;
     Database database;
@@ -52,10 +55,18 @@ public class farmers extends AppCompatActivity {
         adapter=new farmersAdapter(farmers.this, arrayList);
         recyclerView=findViewById(R.id.recyclerView);
         toolbar=findViewById(R.id.tool_bar);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setOnclick(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, true));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
 
-
+    @Override
+    public void onItemClick(farmerModel model) {
+        SharedPreferences sharedPreferences=getSharedPreferences(constants.SHARED_PREF,MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(constants.DATA, new Gson().toJson(model));
+        editor.apply();
+        new viewFarmer().show(getSupportFragmentManager(),"View Farmer");
+    }
 }

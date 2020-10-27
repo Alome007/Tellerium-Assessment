@@ -2,6 +2,15 @@ package com.alome.tellerium.Models;
 
 public class farmerModel {
     String name,loctaion,id,avatar_url;
+    boolean isLocal;
+
+    public boolean isLocal() {
+        return isLocal;
+    }
+
+    public void setLocal(boolean local) {
+        isLocal = local;
+    }
 
     public String getName() {
         return name;
@@ -35,10 +44,11 @@ public class farmerModel {
         this.id = id;
     }
 
-    public farmerModel(String name, String loctaion, String id, String avatar_url) {
+    public farmerModel(String name, String loctaion, String id, String avatar_url, boolean isLocal) {
         this.name = name;
         this.loctaion = loctaion;
         this.id = id;
-        this.avatar_url=avatar_url;
+        this.avatar_url = avatar_url;
+        this.isLocal = isLocal;
     }
 }
