@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Toolbar
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:title="Farmers"
+        android:id="@+id/tool_bar"
+        android:titleTextColor="#ffff"
+        android:navigationIcon="@drawable/ic_close_black_24dp"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tool_bar"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

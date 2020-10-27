@@ -1,6 +1,10 @@
 package com.alome.tellerium.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,33 +27,40 @@ import com.alome.tellerium.Activities.Login;
 import com.alome.tellerium.Adapters.mainAdapter;
 import com.alome.tellerium.Models.mainModel;
 import com.alome.tellerium.R;
+import com.alome.tellerium.Utils.Database;
 import com.alome.tellerium.Utils.Helper;
 import com.alome.tellerium.Utils.constants;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.gmail.samehadar.iosdialog.IOSDialog;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
+
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickListener {
     mainAdapter adapter;
     Helper helper;
     ArrayList<mainModel> arrayList=new ArrayList<>();
     RecyclerView recyclerView;
-    TextView amt;
     ImageView menu;
+    SQLiteDatabase sqLiteDatabase;
     View view;
+    Database database;
     PopupMenu.OnMenuItemClickListener listener;
+    SharedPreferences preferences;
+    View v2;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.home_fragment, container, false);
         initUI();
-        loadData();
+//        showTutorial(menu,v2,recyclerView);
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,23 +69,30 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
                 popup.show();
             }
         });
-        mainModel model=new mainModel(20,"Farmers", R.drawable.ic_farmer);
+        mainModel model=new mainModel(10,"Farmers", R.drawable.ic_farmer);
         arrayList.add(model);
         model=new mainModel(10,"Farms", R.drawable.ic_sprout);
         arrayList.add(model);
         recyclerView.setAdapter(adapter);
-        amt.setText(Helper.Utils.getCurrencySymbol("NGN")+"100,000");
+        boolean isLoaded=preferences.getBoolean(constants.DATA_LOADED,false);
+        if (!isLoaded){
+            loadData();
+        }else{
+            Log.d(constants.TAG, "Data already loaded and stored locally...");
+        }
         return view;
     }
 
     private void initUI() {
-
+        v2=view.findViewById(R.id.add);
         menu=view.findViewById(R.id.menu);
         helper=new Helper(getContext());
-        amt=view.findViewById(R.id.amt);
         recyclerView=view.findViewById(R.id.recyclerView);
         adapter=new mainAdapter(getContext(), arrayList);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        database = new Database(getContext());
+        database.getWritableDatabase();
+        preferences=getContext().getSharedPreferences(constants.SHARED_PREF, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -108,30 +126,53 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
                 .setMessageContent("Please wait..")
                 .setCancelable(false)
                 .show();
-
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        final StringRequest getRequest = new StringRequest(Request.Method.GET, constants.BASE_URL,
-                new Response.Listener<String>()
-                {
+        Ion.with(getContext())
+                .load(constants.BASE_URL)
+                .setTimeout(10000)
+                .addQuery("method", "GET")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onCompleted(Exception e, JsonObject result) {
                         iosDialog.dismiss();
-                        // response
-                        if (response!=null){
+                        if (result==null){
                             Toast.makeText(getContext(), "Please check your Internet Connection!", Toast.LENGTH_SHORT).show();
                         }else{
-                            Log.d("Response", response);
+                            Log.d("Response", result.toString());
+                            JsonObject object=result.getAsJsonObject("data");
+
+                            JsonArray c = object.getAsJsonArray("farmers");
+                            Log.d("JsonArray", c.toString());
+                            for (int a =0; a<c.size(); a++){
+                                JsonObject obj=c.get(a).getAsJsonObject();
+                                Log.d("DataResult", obj.get("reg_no").getAsString());
+                                database.insertData(obj.get("farmer_id").getAsString(), obj.get("first_name")+" "+obj.get("surname"), obj.get("address").getAsString(), obj.get("passport_photo").getAsString());
+                               if (database.fetchData().size()>0){
+                                   SharedPreferences.Editor editor=preferences.edit();
+                                   editor.putBoolean(constants.DATA_LOADED,true);
+                                   editor.apply();
+                               }
+                            }
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        Log.d("ERROR","error =>" +error.toString());
-                    }
-                }
-        );
-        queue.add(getRequest);
+                });
     }
+
+//    private void showTutorial(ImageView v1, View v2, RecyclerView v3){
+//        ShowcaseConfig config = new ShowcaseConfig();
+//        config.setDelay(500); // half second between each showcase view
+//
+//        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(getActivity(), constants.SHARED_PREF);
+//
+//        sequence.setConfig(config);
+//
+//        sequence.addSequenceItem(v1,
+//                "Click here to view more option", "Next");
+//
+//
+//        sequence.addSequenceItem(v3,
+//                "Click on <b>Farmers</b> to view list of Farmers", "GOT IT");
+//
+//        sequence.start();
+//    }
 }

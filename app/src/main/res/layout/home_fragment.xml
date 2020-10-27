@@ -54,29 +54,32 @@
         android:layout_width="match_parent"
         android:layout_margin="@dimen/_15sdp"
         app:cardCornerRadius="@dimen/_8sdp"
-        android:layout_height="@dimen/_100sdp">
+        android:layout_height="@dimen/_200sdp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Stats"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="#000"
+            android:id="@+id/t1"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_height="wrap_content"/>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
-                android:text="Revenue"
-                android:textSize="@dimen/_17sdp"
-                android:textColor="#000"
-                android:id="@+id/t1"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="100,000"
-                android:layout_below="@+id/t1"
+                android:text="No Data yet"
                 android:textSize="@dimen/_30sdp"
                 android:textColor="#000"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/amt"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_height="wrap_content"/>
             <ImageView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/_50sdp"
