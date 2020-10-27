@@ -24,7 +24,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alome.tellerium.Activities.Login;
+import com.alome.tellerium.Activities.farmers;
 import com.alome.tellerium.Adapters.mainAdapter;
+import com.alome.tellerium.Listeners.RecyclerItemClickListener;
 import com.alome.tellerium.Models.mainModel;
 import com.alome.tellerium.R;
 import com.alome.tellerium.Utils.Database;
@@ -38,8 +40,6 @@ import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
-import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
 public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickListener {
     mainAdapter adapter;
@@ -47,7 +47,6 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
     ArrayList<mainModel> arrayList=new ArrayList<>();
     RecyclerView recyclerView;
     ImageView menu;
-    SQLiteDatabase sqLiteDatabase;
     View view;
     Database database;
     PopupMenu.OnMenuItemClickListener listener;
@@ -80,6 +79,22 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
         }else{
             Log.d(constants.TAG, "Data already loaded and stored locally...");
         }
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                switch (position){
+                    case 0:
+                        startActivity(new Intent(getContext(), farmers.class));
+                        break;
+                }
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
         return view;
     }
 

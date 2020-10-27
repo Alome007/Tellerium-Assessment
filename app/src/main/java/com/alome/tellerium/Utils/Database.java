@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.alome.tellerium.Models.farmerModel;
+
 import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
@@ -32,21 +34,21 @@ public class Database extends SQLiteOpenHelper {
         values.put("image_url", image_url);
         sqLiteDatabase.insert("farmers",null,values);
     }
-    public ArrayList fetchData()
+    public ArrayList<farmerModel> fetchData()
     {
-        ArrayList<String>stringArrayList=new ArrayList<String>();
+        ArrayList<farmerModel>datas=new ArrayList<>();
+        farmerModel model;
         String fetchdata="select * from farmers";
         SQLiteDatabase sqLiteDatabase=this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery(fetchdata, null);
         if(cursor.moveToFirst()){
             do
             {
-                stringArrayList.add(cursor.getString(0));
-                stringArrayList.add(cursor.getString(1));
-                stringArrayList.add(cursor.getString(2));
-                stringArrayList.add(cursor.getString(3));
+               model= new farmerModel(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getString(3));
+                datas.add(model);
+
             } while (cursor.moveToNext());
         }
-        return stringArrayList;
+        return datas;
     }
 }
