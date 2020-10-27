@@ -11,7 +11,15 @@
         <ImageView
             android:layout_width="@dimen/_90sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_filter_vintage_black_24dp"
+            android:src="@drawable/ic_launcher_foreground"
             android:layout_height="@dimen/_90sdp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/_20sdp"
+            android:text="Tellerium"
+            android:textColor="#fff"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_gravity="center|bottom"
+            android:layout_height="wrap_content"/>
     </FrameLayout>
 </RelativeLayout>

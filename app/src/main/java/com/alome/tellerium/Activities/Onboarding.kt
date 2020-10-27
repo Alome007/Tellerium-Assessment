@@ -28,7 +28,7 @@ class Onboarding : AppIntro() {
         addSlide(AppIntroFragment.newInstance(
                 "Welcome!",
 
-                "This is an Android Developer Based Assessment from $companyName to create a  simple farmer Management Dashboard",
+                "This is an Android Developer Based Assessment from $companyName to create a  simple Dashboard",
                 imageDrawable = R.drawable.ic_welcome,
                 backgroundDrawable = R.drawable.bg_app_intro,
                 titleColor =Color.BLACK,
@@ -37,7 +37,7 @@ class Onboarding : AppIntro() {
 
         addSlide(AppIntroFragment.newInstance(
                 "Get Started!",
-                "Hoping you'd have a wonderful experience  ",
+                "Hoping you'd have a wonderful experience!",
                 imageDrawable = R.drawable.ic_farm_girl,
                 backgroundDrawable = R.drawable.bg_app_intro,
                 titleColor =Color.BLACK,
@@ -49,6 +49,7 @@ class Onboarding : AppIntro() {
         setColorDoneText(Color.BLACK)
         setProgressIndicator()
         setNextArrowColor(Color.BLACK)
+        setDoneText("Get Started")
     }
 
     public override fun onSkipPressed(currentFragment: Fragment?) {

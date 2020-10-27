@@ -17,6 +17,13 @@ class Login:  AppCompatActivity() {
         tool_bar.setNavigationOnClickListener{
             onBackPressed()
         }
+        lost_pass.setOnClickListener {
+            Toast.makeText(this,"Oopss..", Toast.LENGTH_LONG).show();
+        }
+
+        sign.setOnClickListener {
+            Toast.makeText(this,"Sign Up!", Toast.LENGTH_LONG).show();
+        }
         val helper= Helper(this)
         login.setOnClickListener{
             if (verify()){
