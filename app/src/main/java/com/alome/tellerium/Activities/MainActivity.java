@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
+import com.alome.tellerium.Fragments.addFarmers;
 import com.alome.tellerium.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 

@@ -52,6 +52,7 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
     PopupMenu.OnMenuItemClickListener listener;
     SharedPreferences preferences;
     View v2;
+    private int count;
 
 
     @Nullable
@@ -70,7 +71,7 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
         });
         mainModel model=new mainModel(10,"Farmers", R.drawable.ic_farmer);
         arrayList.add(model);
-        model=new mainModel(10,"Farms", R.drawable.ic_sprout);
+        model=new mainModel(count,"Add Farmer", R.drawable.ic_add_group);
         arrayList.add(model);
         recyclerView.setAdapter(adapter);
         boolean isLoaded=preferences.getBoolean(constants.DATA_LOADED,false);
@@ -87,6 +88,10 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
                     case 0:
                         startActivity(new Intent(getContext(), farmers.class));
                         break;
+                    case 1:
+                        new addFarmers().show(getFragmentManager(),"Add farmers");
+                        break;
+
                 }
             }
 
@@ -108,6 +113,16 @@ public class Dashboard extends Fragment implements PopupMenu.OnMenuItemClickList
         database = new Database(getContext());
         database.getWritableDatabase();
         preferences=getContext().getSharedPreferences(constants.SHARED_PREF, Context.MODE_PRIVATE);
+        final Handler handler=new Handler();
+         handler.postDelayed(new Runnable() {
+             @Override
+             public void run() {
+                 SharedPreferences sharedPreferences=getContext().getSharedPreferences(constants.SHARED_PREF, Context.MODE_PRIVATE);
+                 count=sharedPreferences.getInt(constants.LOCAL_COUNT,0);
+                 handler.postDelayed(this,1000);
+             }
+         },1000);
+
     }
 
     @Override
