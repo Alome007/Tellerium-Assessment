@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class addFarmers extends BottomSheetDialogFragment {
     Uri uri;
     Button register;
     Database database;
+    Toolbar toolbar;
     int localCount;
     ImageView icon;
     @Nullable
@@ -51,7 +53,12 @@ public class addFarmers extends BottomSheetDialogFragment {
                 }
             }
         });
-
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +97,7 @@ public class addFarmers extends BottomSheetDialogFragment {
     }
 
     private void initUI() {
+        toolbar=view.findViewById(R.id.tool_bar);
         database = new Database(getContext());
         database.getWritableDatabase();
         fullName=view.findViewById(R.id.name);

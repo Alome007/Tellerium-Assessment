@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Tellerium Assessment</string>
     <string name="deli">"</string>
+    <string name="google_maps_key">AIzaSyDpTdceKrKEKs4dNW0Iq2jmPx8HGuU9Pz4</string>
+
 </resources>
